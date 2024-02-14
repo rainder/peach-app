@@ -2,12 +2,19 @@
 
 Follow [react native setup guide](https://reactnative.dev/docs/environment-setup)
 
+/ Make sure you ahve openjdk-17 (no other) and cmake-3.10.2 (this specific version is required among others)
+
 Run
 
 ```
 npm install
-npx react-native link
 ```
+```
+npx react-native-asset
+```
+### Initializing the peach-api submodule
+
+When cloning this repo you will have to run: `git submodule update --init` to initialize the peach-api submodule.
 
 **Android**
 
@@ -17,14 +24,26 @@ npx react-native link
 
 https://s-pace.github.io/react-native/docs/signed-apk-android.html
 
+#### Just generate a 'keystore' with the following command:
+```
+keytool -genkey -v -keystore peach-test-apk.keystore -alias peach-test-apk -keyalg RSA -keysize 2048 -validity 10000
+```
+It will ask you for a password, something insecure and easy to remember would be `peach21`.
+
+#### Move this new peach-test-apk.keystore file to /android/app (if you run for android)
+
+You will then have to edit the `gradle.properties` file and set the `MYAPP_RELEASE_STORE_PASSWORD` and the `MYAPP_RELEASE_KEY_PASSWORD`.
+
+This file is located in the `.gradle` folder, which can be either in the repo's root or in the machine's root.
+
+
 **iOS**
 
 Install dependencies
 
 `cd ios && pod install`
 
-## Environment Setup
-
+--------
 Copy template for each environment
 
 ```
@@ -140,6 +159,3 @@ then run
 
 before building the app
 
-### Initializing the peach-api submodule
-
-When cloning this repo you will have to run: `git submodule update --init` to initialize the peach-api submodule.
